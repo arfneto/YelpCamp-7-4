@@ -1,0 +1,35 @@
+var navCampgrounds = 
+    new Promise
+    (
+        function (resolve, reject)
+        {
+            Campground.update().cursor()
+            .on('data',
+                function(one)
+                {
+                    // now create toCreate comments for campground one
+                    toCreate = 1 + Math.floor(Math.random() * req.body.nComments);
+                    fillCampground(toCreate,one);
+                }   // end function()
+            )   // end on
+            .on(
+                'error',
+                () => {console.log("createCommentsP(): Campground (s) updated with new comment (s)")}
+            )
+            .on('end',
+                () => {console.log("createCommentsP(): Campground (s) updated with new comment (s)")}
+            );
+        }   // end function()
+    );   // end promise
+
+navCampgrounds.then
+(   
+    function(one)
+    {
+       console.log("createCommentsP(): All Campgrounds processed"),
+       console.log(one);
+    }   // end function()
+)
+.return;
+
+return next();  // middleware ends here

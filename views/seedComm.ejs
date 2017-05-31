@@ -1,0 +1,21 @@
+<% include ./partials/header %>
+<div class="container">
+    <div class="row">
+        <h1 style="text-align: center">Insert Up to X Comments into ALL Campgrounds</h1>
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/seedComm" method="POST">
+                <div class="form-group">
+                    <input  class="form-control" 
+                            type="number" 
+                            name="nComments" 
+                            placeholder="Max Comments per Campground">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                </div>
+            </form>
+            <a href="/campgrounds">Go See Them!</a>
+        </div>
+    </div>
+</div>
+<% include ./partials/footer %>

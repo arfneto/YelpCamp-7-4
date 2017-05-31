@@ -1,0 +1,40 @@
+<% include ./partials/header %>
+<div class="container">
+    <header class="jumbotron">
+    <div class="container">
+        <h1>
+             YelpCamps
+        </h1>
+        <p>
+            Simple Listing
+        </p>
+        <p>
+            <a class="btn btn-primary btn-large"
+                href="/">Home</a>
+        </p>
+    </div>    
+    </header>
+    
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    </div>
+        <% campgrounds.forEach(function(campground){ %>
+            <HR>
+            <h4>
+                Campground "<%= campground.name %>",
+                image path: "<%= campground.image %>",
+                Price:           <%= campground.price  %>
+                Author: "<%= campground.author.username %>"
+                Comments [<%=campground.comments.length %>]
+            </h4>
+            <% campground.comments.forEach(function(comment){ %>
+                <p id="rline">
+                    <strong>From <%= comment.author.username %> 
+                    [ _id: <%= comment._id %> ]
+                    </strong>
+                    <%= comment.text.slice(0,50); %>...
+                </p>
+            <% }); %>
+        <% });    // end forEach %>
+    </div>
+</div>
+<% include ./partials/footer %>

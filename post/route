@@ -1,0 +1,35 @@
+// seed route
+app.post(
+    "/seed",
+    yTools.isLoggedIn,
+    yTools.clearCampgrounds,
+    yTools.clearComments,
+    yTools.createCampgroundsP,
+    yTools.createCommentsP,
+    function(req, res)
+    {
+        console.log("seed POST route");
+        res.redirect("/campgrounds");
+    }
+);
+//
+// seedComm: populate only comments db
+app.get(
+    "/seedComm",
+    yTools.isLoggedIn,
+    function(req, res)
+    { 
+        res.render("seedComm");
+    }   // end function
+    );  // end app.get()
+
+app.post(
+    "/seedComm",
+    yTools.isLoggedIn,
+    yTools.createCommentsP,
+    function(req, res)
+    {
+        console.log("seedCom POST route");
+        res.redirect("/campgrounds");
+    }
+);

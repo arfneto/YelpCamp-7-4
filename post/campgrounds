@@ -1,0 +1,33 @@
+for(var ix=1; ix<=req.body.nCampgrounds; ix++)
+{
+    allToCreate     // declared as var allToCreate = [];
+    .push(
+        Campground.create
+        (
+            {
+                author:
+                {   
+                    id: foundUser._id,
+                    username: req.user.username
+                },
+                name: "Camp " + ix.toString(),
+                price: ix * 10,
+                image: "/images/Mountain-" + ix%10 + ".jpg",
+                description: "Description of Camp " +
+                    ix.toString() + "..." + ipsum,
+                comments: []
+            }
+        )  // end create
+    );  //end push()
+}   // end for
+Promise.all(allToCreate)
+.then(  () => 
+        {
+            console.log("CreateCampgroundsP(): All Campgrounds created");
+            return next();
+        },
+        trouble => 
+        { 
+            console.log("CreateCampgroundsP(): ERROR creating Campgrounds");
+            console.log(trouble)}
+).return;
