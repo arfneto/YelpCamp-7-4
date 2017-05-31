@@ -5,7 +5,7 @@ var express     = require("express"),
     User        = require("./models/users"),
     yTools      = require("./middleware");
 
-var     Promise                 = require('bluebird');
+var    Promise                  = require('bluebird');
 var    mongoose                 = Promise.promisifyAll(require("mongoose"));
 var    passport                 = require("passport");
 var    LocalStrategy            = require("passport-local");
@@ -13,13 +13,36 @@ var    passportLocalMongoose    = require("passport-local-mongoose");
 
 var    app         = express();
 
-var     mongooseConnectString   = "mongodb://localhost/v7-2";
+//var     mongooseConnectString   = "mongodb://localhost/v7-2";
+var     mongooseConnectString   = "mongodb://toninho:270easy@ds157971.mlab.com:57971/arfneto";
 
-//  reqiuring routes
+//  requiring routes
 var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index");
 
+var yelpcampVersion = "7-4";
+var defaultDB = "v" + yelpcampVersion;
+var dbLocation = "";
+if(process.env.MONGODB)
+{
+    mongooseConnectString = process.env.MONGODB;
+}
+else
+{
+    mongooseConnectString = "mongodb://localhost/" + defaultDB;
+};
+if(mongooseConnectString.indexOf("localhost")>0)
+{
+    dbLocation = " database is LOCAL";
+}
+else
+{
+    if(mongooseConnectString.indexOf("mlab.com")>0)
+    {
+        dbLocation = " database at MLAB";
+    }
+}
 mongoose.connect(mongooseConnectString);
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -39,8 +62,11 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
-   res.locals.currentUser = req.user;
-   next();
+    res.locals.currentUser = req.user;
+    res.locals.yelpcampVersion = 
+        "YelpCamp " + defaultDB +
+        "," + dbLocation;
+    next();
 });
 
 // ROUTES =====================================================================
@@ -206,5 +232,6 @@ app.get(
     );  // end app.get()
 
 app.listen(process.env.PORT, process.env.IP, function(){
-   console.log("The YelpCamp Server V7.4 Has Started!");
+   console.log("The YelpCamp Server V7-4 Has Started!");
+   console.log(dbLocation);
 });

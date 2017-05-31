@@ -108,8 +108,7 @@ yTools.createCampgroundsP =
                     );
                     for(var ix=1; ix<=req.body.nCampgrounds; ix++)
                     {
-                        allToCreate
-                        .push(
+                        allToCreate.push(
                             Campground.create
                             (
                                 {
@@ -128,8 +127,7 @@ yTools.createCampgroundsP =
                             )  // end create
                         );  //end push()
                     }   // end for
-                    Promise.all(allToCreate)
-                    .then(  () => 
+                    Promise.all(allToCreate).then(  () => 
                             {
                                 console.log("CreateCampgroundsP(): All Campgrounds created");
                                 return next();
